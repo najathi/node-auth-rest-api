@@ -28,9 +28,12 @@ router.post('/register', async (req, res, next) => {
 
         const createdUser = await user.save();
 
+        // create and assign a token
+        const token = jwt.sign({ _id: createdUser._id }, process.env.TOKEN_SECRET);
+
         if (createdUser) {
 
-            res.json({ user: { id: createdUser._id, name: createdUser.name, email: createdUser.email } });
+            res.header('auth-token', token).json({ user: { id: createdUser._id, name: createdUser.name, email: createdUser.email, token: token } });
 
         }
 
