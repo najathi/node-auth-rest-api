@@ -29,11 +29,12 @@ router.post('/register', async (req, res, next) => {
         const createdUser = await user.save();
 
         // create and assign a token
-        const token = jwt.sign({ _id: createdUser._id }, process.env.TOKEN_SECRET);
+        const token = jwt.sign({ _id: createdUser._id }, process.env.TOKEN_SECRET, { expiresIn: "1h" });
 
         if (createdUser) {
 
-            res.header('auth-token', token).json({ user: { id: createdUser._id, name: createdUser.name, email: createdUser.email, token: token } });
+            // res.header('auth-token', token).json({ id: createdUser._id, name: createdUser.name, email: createdUser.email, token: token, token_type: "Bearer", expires_in: 60 * 60 });
+            res.json({ id: createdUser._id, name: createdUser.name, email: createdUser.email, token: token, token_type: "Bearer", expires_in: 60 * 60 });
 
         }
 
@@ -58,8 +59,9 @@ router.post('/login', async (req, res, next) => {
     if (!validPass) return res.status(400).json({ message: 'Invalid Password' });
 
     // create and assign a token
-    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).json({ user: { id: user._id, name: user.name, email: user.email, token: token } });
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: "1h" });
+    // res.header('auth-token', token).json({ id: user._id, name: user.name, email: user.email, token: token, token_type: "Bearer", expires_in: 60 * 60 });
+    res.header('auth-token', token).json({ id: user._id, name: user.name, email: user.email, token: token, token_type: "Bearer", expires_in: 60 * 60 });
 
 });
 

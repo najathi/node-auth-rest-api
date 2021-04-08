@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const authRoute = require('./routes/auth.js');
 const postsRoute = require('./routes/posts.js');
@@ -16,6 +17,7 @@ mongoose.connect(process.env.DB_CONNECTION, {
 });
 
 // Middleware
+app.use(cors()); // fixed CORS origin error
 app.use(express.json()); // works like body-parser
 
 // Route Middleware
