@@ -7,6 +7,10 @@ const User = require('../models/User');
 
 const { registerValidation, loginValidation } = require('../validation.js');
 
+router.get('/sample', (req, res, next) => {
+    return res.json({ msg: "works" });
+});
+
 
 router.post('/register', async (req, res, next) => {
 

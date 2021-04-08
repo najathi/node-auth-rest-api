@@ -26,4 +26,4 @@ app.get('/', (req, res) => {
     res.send('Node Authentication API by Najathi');
 });
 
-app.listen(4400, () => console.log('Server Up and running'));
+app.listen(process.env.PORT, () => console.log('Server Up and running'));
