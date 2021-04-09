@@ -19,7 +19,7 @@ router.post('/register', async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
     const user = new User({
-        name: req.body.name,
+        username: req.body.username,
         email: req.body.email,
         password: hashedPassword,
     });
@@ -34,7 +34,7 @@ router.post('/register', async (req, res, next) => {
         if (createdUser) {
 
             // res.header('auth-token', token).json({ id: createdUser._id, name: createdUser.name, email: createdUser.email, token: token, token_type: "Bearer", expires_in: 60 * 60 });
-            res.json({ id: createdUser._id, name: createdUser.name, email: createdUser.email, token: token, token_type: "Bearer", expires_in: 60 * 60 });
+            res.json({ id: createdUser._id, username: createdUser.username, email: createdUser.email, token: token, token_type: "Bearer", expires_in: 60 * 60 });
 
         }
 
@@ -61,7 +61,7 @@ router.post('/login', async (req, res, next) => {
     // create and assign a token
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, { expiresIn: "1h" });
     // res.header('auth-token', token).json({ id: user._id, name: user.name, email: user.email, token: token, token_type: "Bearer", expires_in: 60 * 60 });
-    res.json({ id: user._id, name: user.name, email: user.email, token: token, token_type: "Bearer", expires_in: 60 * 60 });
+    res.json({ id: user._id, username: user.username, email: user.email, token: token, token_type: "Bearer", expires_in: 60 * 60 });
 
 });
 
